@@ -1,0 +1,26 @@
+{
+  "name": "agent-skill-templates",
+  "description": "Cross-agent skills for developers. Installable with npx skills, Claude Code, Codex, GitHub Copilot and more.",
+  "owner": {
+    "name": "LakoreAI",
+    "url": "https://github.com/LakoreAI"
+  },
+  "plugins": [
+    {
+      "name": "agent-skill-templates",
+      "source": "./",
+      "description": "Cross-agent skills for developers. Installable with npx skills, Claude Code, Codex, GitHub Copilot and more.",
+      "version": "0.1.0"
+    },
+    {
+      "name": "example-skill",
+      "source": "./",
+      "strict": false,
+      "description": "Example skill that shows the layout every skill in this repo follows. Use when the user asks for a demo of the skill template, or as a reference when writing a new skill.",
+      "version": "0.1.0",
+      "skills": [
+        "./skills/example-skill"
+      ]
+    }
+  ]
+}

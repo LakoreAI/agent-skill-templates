@@ -1,0 +1,20 @@
+{
+  "name": "agent-skill-templates",
+  "interface": {
+    "displayName": "Agent Skill Templates"
+  },
+  "plugins": [
+    {
+      "name": "agent-skill-templates",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

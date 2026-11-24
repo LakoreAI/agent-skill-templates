@@ -1,0 +1,11 @@
+{
+  "name": "agent-skill-templates",
+  "displayName": "Agent Skill Templates",
+  "description": "Cross-agent skills for developers. Installable with npx skills, Claude Code, Codex, GitHub Copilot and more.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": { "name": "LakoreAI", "url": "https://github.com/LakoreAI" },
+  "repository": "https://github.com/LakoreAI/agent-skill-templates",
+  "keywords": ["agent-skills", "skills", "claude-code", "codex", "copilot"],
+  "category": "Developer Tools"
+}

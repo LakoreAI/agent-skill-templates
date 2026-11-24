@@ -1,0 +1,17 @@
+name: validate
+on:
+  push: { branches: [main] }
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Validate skills and check manifests are in sync
+        run: node scripts/skills.mjs check
+      - name: npx skills can discover the skills
+        run: npx -y skills add . --list
