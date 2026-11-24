@@ -25,6 +25,7 @@ function frontmatter(text) {
       while (i + 1 < lines.length && /^\s+\S/.test(lines[i + 1])) parts.push(lines[++i].trim());
       v = parts.join(" ");
     }
+    if (/^[^"'>|]/.test(v) && /:\s|\s#/.test(v)) out.__yamlError = kv[1];
     out[kv[1]] = v.replace(/^(["'])([\s\S]*)\1$/, "$2");
   }
   return out;
@@ -39,6 +40,7 @@ function loadSkills() {
     if (!fs.existsSync(file)) { errors.push(`skills/${e.name}: missing SKILL.md`); continue; }
     const fm = frontmatter(fs.readFileSync(file, "utf8"));
     if (!fm) { errors.push(`skills/${e.name}: SKILL.md has no frontmatter`); continue; }
+    if (fm.__yamlError) errors.push(`skills/${e.name}: unquoted "${fm.__yamlError}" contains ": " or " #" (invalid YAML; strict parsers drop the skill). Wrap it in double quotes`);
     if (fm.name !== e.name) errors.push(`skills/${e.name}: frontmatter name "${fm.name}" must equal the directory name`);
     if (!NAME_RE.test(e.name) || e.name.length > 64) errors.push(`skills/${e.name}: name must be lowercase-hyphenated, <= 64 chars`);
     if (!fm.description) errors.push(`skills/${e.name}: description is required`);
