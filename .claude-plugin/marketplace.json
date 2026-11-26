@@ -14,12 +14,12 @@
     },
     {
       "name": "example-skill",
-      "source": "./",
+      "source": "./skills/example-skill",
       "strict": false,
       "description": "Example skill that shows the layout every skill in this repo follows. Use when the user asks for a demo of the skill template, or as a reference when writing a new skill.",
       "version": "0.1.0",
       "skills": [
-        "./skills/example-skill"
+        "./"
       ]
     }
   ]

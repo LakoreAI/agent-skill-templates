@@ -11,9 +11,33 @@ Replace `LakoreAI/agent-skill-templates` with your own `owner/repo` after you fo
 |---|---|
 | **Any agent** via [`npx skills`](https://github.com/vercel-labs/skills) (Claude Code, Codex, Copilot, Cursor, OpenCode, and more) | `npx skills add LakoreAI/agent-skill-templates` |
 | One skill only | `npx skills add LakoreAI/agent-skill-templates --skill example-skill` |
-| **Claude Code** marketplace | `/plugin marketplace add LakoreAI/agent-skill-templates` then `/plugin install agent-skill-templates@agent-skill-templates` |
+| **Claude Code** marketplace | `/plugin marketplace add LakoreAI/agent-skill-templates` then `/plugin install agent-skill-templates@agent-skill-templates` (all skills) or `/plugin install example-skill@agent-skill-templates` (one) |
 | **Codex** | `codex plugin marketplace add LakoreAI/agent-skill-templates` |
 | **GitHub Copilot** (CLI / app) | Add marketplace `LakoreAI/agent-skill-templates`, then install |
+| **GitHub CLI** ([`gh skill`](#install-with-gh-skill)) | `gh skill install LakoreAI/agent-skill-templates` |
+
+### Install with `gh skill`
+
+Needs GitHub CLI 2.90 or later (`--all` needs 2.94). `gh skill` is in preview, so its flags may change.
+
+```bash
+# pick skills and agents interactively
+gh skill install LakoreAI/agent-skill-templates
+
+# one skill, for one agent, available in every project
+gh skill install LakoreAI/agent-skill-templates example-skill --agent claude-code --scope user
+
+# every skill
+gh skill install LakoreAI/agent-skill-templates --all --agent codex
+
+# read a skill before installing it, then keep installed skills current
+gh skill preview LakoreAI/agent-skill-templates example-skill
+gh skill update --all
+```
+
+Without `--scope`, skills go into the current project. Without `--agent`, a non-interactive run
+installs for GitHub Copilot. `gh skill` installs the latest release if the repo has one, otherwise
+the default branch. Pin a tag or commit with `--pin`.
 
 ## Publish your own skills (for authors)
 
@@ -25,8 +49,16 @@ Replace `LakoreAI/agent-skill-templates` with your own `owner/repo` after you fo
    # edit the SKILL.md, add references/ and scripts/ if needed
    node scripts/skills.mjs sync             # regenerates every manifest
    ```
-4. Commit and push. CI runs `node scripts/skills.mjs check`, which fails on a bad skill or stale manifests.
-5. Delete `skills/example-skill` when you no longer need it.
+4. Commit and push. CI runs `node scripts/skills.mjs check`, which fails on a bad skill or stale manifests,
+   then confirms that `npx skills` and `gh skill` can read the repo.
+5. Optional: publish a GitHub release for `gh skill`, using the version in `plugin.config.json`:
+   ```bash
+   gh skill publish --dry-run        # validate only
+   gh skill publish --tag v0.1.0     # create the release
+   ```
+   Once a release exists, `gh skill install` uses it instead of the default branch, so publish a new one
+   for every change users should get.
+6. Delete `skills/example-skill` when you no longer need it.
 
 Requires Node 18+. There are no dependencies.
 
@@ -48,11 +80,13 @@ templates/skill/SKILL.md        scaffold used by `new`
 scripts/skills.mjs              sync / check / new
 ```
 
-`npx skills` needs no manifest. It discovers `skills/*/SKILL.md` directly.
+`npx skills` and `gh skill` need no manifest. They discover `skills/*/SKILL.md` directly.
 
 ## Skill rules
 
 - Directory name = frontmatter `name` (lowercase, hyphens, max 64 chars).
 - `description` says what the skill does **and when to use it**. Agents match on it. Max 1024 chars.
+  Write it on one line (quote it if it contains `: ` or ` #`) or as a `>-` block.
 - Keep `SKILL.md` under 500 lines. Put detail in `references/`, deterministic work in `scripts/`.
 - Reference bundled files with relative paths.
+- Run scripts through their interpreter (`bash scripts/x.sh`). `gh skill install` drops the executable bit.

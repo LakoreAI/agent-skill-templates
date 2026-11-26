@@ -1,6 +1,7 @@
 ---
 name: example-skill
 description: Example skill that shows the layout every skill in this repo follows. Use when the user asks for a demo of the skill template, or as a reference when writing a new skill.
+license: MIT
 ---
 
 # Example Skill
@@ -16,7 +17,7 @@ Replace this body with instructions the agent should follow once the skill trigg
 
 1. Do the first thing.
 2. Read `references/guide.md` only when you need the detail. Keep this file short.
-3. Run `scripts/hello.sh <name>` for anything deterministic instead of re-deriving it.
+3. Run `bash scripts/hello.sh <name>` for anything deterministic instead of re-deriving it.
 
 ## Rules
 

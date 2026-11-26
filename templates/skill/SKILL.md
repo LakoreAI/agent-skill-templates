@@ -1,6 +1,7 @@
 ---
 name: __NAME__
-description: __WHAT it does. Use when __the user asks X / the task involves Y__.
+description: "__FILL_IN__: what it does. Use when the user asks X or the task involves Y."
+license: __LICENSE__
 ---
 
 # __NAME__
